@@ -2,7 +2,6 @@ package com.overridetech.funpay_monitor.client;
 
 
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -15,8 +14,6 @@ import java.io.IOException;
 public class FunPayClient {
 
     private final static String FUN_PAY_POE2_DIVINES = "https://funpay.com/chips/209/";
-
-
 
     public static void getHtml() throws IOException {
         Document doc = Jsoup.connect(FUN_PAY_POE2_DIVINES).userAgent("Mozilla").get();
