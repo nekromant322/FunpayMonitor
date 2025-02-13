@@ -2,6 +2,8 @@ package com.overridetech.funpay_monitor.dto;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -18,4 +20,6 @@ public class FunPayPoe2Offer {
     private String rating;
     private String reviews;
     private String experience;
+
+    private LocalDateTime time;
 }
