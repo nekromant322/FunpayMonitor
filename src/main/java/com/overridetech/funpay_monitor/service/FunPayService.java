@@ -20,8 +20,7 @@ public class FunPayService {
     private final FunPayClient client;
     private final Poe2DivineOfferRepository repository;
 
-    @Scheduled(fixedRateString = "${app.scrapRate}")
-    public void scrap() {
+    public void scrapDivineOffers() {
         try {
             LocalDateTime time = LocalDateTime.now();
             var htmls = client.getHtmls();
