@@ -5,9 +5,9 @@ spring:
     hikari:
       connectionTimeout: '20000'
       maximumPoolSize: '5'
-    url: 'jdbc:postgresql://localhost:5432/postgres'
-    username: postgres
-    password: changeme
+    url: jdbc:postgresql://${DATABASE_DOMAIN:localhost}:5432/${DATABASE_NAME:java_test_con}
+    username: ${DATABASE_USERNAME:postgres}
+    password: ${DATABASE_PASSWORD:1234}
   jpa:
     database: POSTGRESQL
     hibernate:

@@ -1,6 +1,18 @@
-version: '3.5'
-
 services:
+  web_app:
+    container_name: web_app_container
+    build: .
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+    ports:
+      - "8080:8080"
+    networks:
+      - postgres
+    volumes:
+      - maven-repo:/root/.m2
+
   postgres:
     container_name: postgres_container
     image: postgres
@@ -22,3 +34,4 @@ networks:
 
 volumes:
   postgres:
+  maven-repo:
