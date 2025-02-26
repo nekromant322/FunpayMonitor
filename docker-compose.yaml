@@ -3,9 +3,10 @@ services:
     container_name: funpay_monitor
     build: .
     depends_on:
-      - postgres
-    env_file:
-      - .env
+      - funpay_monitor_db
+    environment:
+      - DATABASE_USERNAME=$DATABASE_USERNAME
+      - DATABASE_PASSWORD=$DATABASE_PASSWORD
     ports:
       - "8080:8080"
     networks:
@@ -22,8 +23,8 @@ services:
     container_name: funpay_monitor_db
     image: postgres
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      POSTGRES_USER: $DATABASE_USERNAME
+      POSTGRES_PASSWORD: $DATABASE_PASSWORD
       PGDATA: /data/postgres
     volumes:
       - postgres:/data/postgres
