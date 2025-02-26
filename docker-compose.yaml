@@ -1,8 +1,25 @@
-version: '3.5'
-
 services:
-  postgres:
-    container_name: postgres_container
+  funpay_monitor:
+    container_name: funpay_monitor
+    build: .
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+    ports:
+      - "8080:8080"
+    networks:
+      - postgres
+    volumes:
+      - maven-repo:/root/.m2
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "1"
+
+  funpay_monitor_db:
+    container_name: funpay_monitor_db
     image: postgres
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
@@ -15,6 +32,11 @@ services:
     networks:
       - postgres
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "1"
 
 networks:
   postgres:
@@ -22,3 +44,5 @@ networks:
 
 volumes:
   postgres:
+  maven-repo:
+

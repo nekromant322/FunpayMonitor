@@ -1,0 +1,70 @@
+name: Build image && run new version on server
+
+on:
+  push:
+    branches:
+      - master
+
+
+jobs:
+
+  #в скрипте надо:
+  #собрать образ
+  #пушнуть в дкоерхаб
+  #скопировать композ на сервер
+  #запустить на сервере новую версию приложения
+
+  #* не забыть выставить лимит 50мб на логи в композе, иначе засрешь весь диск
+  #по оперативе тоже неплохо бы в 250мб уместиться через параметры жвм
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Build with Maven
+        run: mvn clean install -B -DskipTests
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and Push to Dockerhub
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/funpay-monitor:latest
+
+      - name: Copy docker-compose to server
+        uses: appleboy/scp-action@v0.1.6
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          source: "docker-compose.yml"
+          target: "~/funpay-monitor/"
+
+      - name: docker compose up
+        uses: appleboy/scp-action@v0.1.6
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            cd ~/deploy
+            docker-compose pull
+            docker-compose up -d --remove-orphans
