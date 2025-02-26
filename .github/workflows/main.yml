@@ -80,6 +80,18 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
+            set -e  # Прерываем выполнение при ошибках
+            
+            cd ~/funpay-monitor
+            
+            echo " Останавливаем и удаляем старые контейнеры..."
+            docker ps -a | grep funpay_monitor && docker stop funpay_monitor funpay_monitor_db || true
+            docker ps -a | grep funpay_monitor && docker rm funpay_monitor funpay_monitor_db || true
+        
+            echo " Очищаем старые сети и тома..."
+            docker network prune -f || true
+      
+            echo " Запускаем новую версию контейнеров..."
             cd ~/funpay-monitor
             docker-compose pull
             docker-compose up -d --remove-orphans
