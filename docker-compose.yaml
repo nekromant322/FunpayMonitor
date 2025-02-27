@@ -1,34 +1,39 @@
 services:
   funpay_monitor:
     container_name: funpay_monitor
-    build: .
+    image: nekromant322/funpay-monitor:latest
     depends_on:
-      - postgres
-    env_file:
-      - .env
+      - funpay_monitor_db
+    environment:
+      - DATABASE_USERNAME=$DATABASE_USERNAME
+      - DATABASE_PASSWORD=$DATABASE_PASSWORD
+      - SPRING_PROFILES_ACTIVE=prod
     ports:
-      - "8080:8080"
+      - "8081:8080"
     networks:
       - postgres
-    volumes:
-      - maven-repo:/root/.m2
     logging:
       driver: "json-file"
       options:
         max-size: "50m"
         max-file: "1"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
   funpay_monitor_db:
     container_name: funpay_monitor_db
     image: postgres
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      POSTGRES_USER: $DATABASE_USERNAME
+      POSTGRES_PASSWORD: $DATABASE_PASSWORD
       PGDATA: /data/postgres
     volumes:
       - postgres:/data/postgres
     ports:
-      - "5432:5432"
+      - "5433:5432"
     networks:
       - postgres
     restart: unless-stopped
@@ -44,5 +49,4 @@ networks:
 
 volumes:
   postgres:
-  maven-repo:
 

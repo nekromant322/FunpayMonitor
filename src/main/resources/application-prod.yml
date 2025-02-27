@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: funpay-monitor
+  datasource:
+    hikari:
+      connectionTimeout: '20000'
+      maximumPoolSize: '5'
+    url: jdbc:postgresql://funpay_monitor_db:5432/postgres
+    username: ${DATABASE_USERNAME:postgres}
+    password: ${DATABASE_PASSWORD:1234}
+  jpa:
+    database: POSTGRESQL
+    hibernate:
+      ddl-auto: create-drop
+app:
+  scrapRate: '60000'
+
+

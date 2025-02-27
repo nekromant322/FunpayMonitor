@@ -3,7 +3,7 @@ name: Build image && run new version on server
 on:
   push:
     branches:
-      - master
+      - feature/git-action
 
 
 jobs:
@@ -36,35 +36,57 @@ jobs:
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          username: nekromant322
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Set up Docker
         uses: docker/setup-buildx-action@v3
+
+      # 1. Устанавливаем env-переменные из secrets
+      - name: Setup environment
+        run: |
+          echo "DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }}" >> $GITHUB_ENV
+          echo "DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}" >> $GITHUB_ENV
+
+      # 2. Генерируем docker-compose.yml из шаблона
+      - name: Generate docker-compose from template
+        run: |
+          sudo apt-get update && sudo apt-get install -y gettext-base
+          envsubst < docker-compose.yaml > docker-compose.generated.yaml
+          mv docker-compose.generated.yaml docker-compose.yaml
 
       - name: Build and Push to Dockerhub
         uses: docker/build-push-action@v6
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/funpay-monitor:latest
+          tags: nekromant322/funpay-monitor:latest
 
       - name: Copy docker-compose to server
         uses: appleboy/scp-action@v0.1.6
         with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          source: "docker-compose.yml"
+          host: 194.87.99.49
+          username: github
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
+          source: "docker-compose.yaml"
           target: "~/funpay-monitor/"
 
       - name: docker compose up
-        uses: appleboy/scp-action@v0.1.6
+        uses: appleboy/ssh-action@v1.2.1
         with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
+          host: 194.87.99.49
+          username: github
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
-            cd ~/deploy
+            set -e  # Прерываем выполнение при ошибках 
+            cd ~/funpay-monitor
+            
+            echo " Останавливаем и удаляем старые контейнеры..."
+            docker compose stop funpay_monitor
+        
+      
+            echo " Запускаем новую версию контейнеров..."
             docker-compose pull
-            docker-compose up -d --remove-orphans
+            docker-compose up -d --remove-orphans  --wait
