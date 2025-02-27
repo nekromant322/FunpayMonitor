@@ -84,9 +84,9 @@ jobs:
             cd ~/funpay-monitor
             
             echo " Останавливаем и удаляем старые контейнеры..."
-            docker compose down --remove-orphans || true
+            docker compose stop funpay_monitor
         
       
             echo " Запускаем новую версию контейнеров..."
             docker-compose pull
-            docker-compose up -d --remove-orphans
+            docker-compose up -d --remove-orphans  --wait

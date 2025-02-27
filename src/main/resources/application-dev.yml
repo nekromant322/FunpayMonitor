@@ -1,6 +1,9 @@
 spring:
   application:
     name: funpay-monitor
+  profiles:
+    active: dev
+
   datasource:
     hikari:
       connectionTimeout: '20000'

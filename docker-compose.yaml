@@ -7,6 +7,7 @@ services:
     environment:
       - DATABASE_USERNAME=$DATABASE_USERNAME
       - DATABASE_PASSWORD=$DATABASE_PASSWORD
+      - SPRING_PROFILES_ACTIVE=prod
     ports:
       - "8081:8080"
     networks:
@@ -16,6 +17,11 @@ services:
       options:
         max-size: "50m"
         max-file: "1"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
   funpay_monitor_db:
     container_name: funpay_monitor_db
