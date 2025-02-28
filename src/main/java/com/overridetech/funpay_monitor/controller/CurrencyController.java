@@ -4,7 +4,6 @@ import com.overridetech.funpay_monitor.dto.CurrencyRateDto;
 import com.overridetech.funpay_monitor.service.CurrencyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.jsoup.helper.ValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
