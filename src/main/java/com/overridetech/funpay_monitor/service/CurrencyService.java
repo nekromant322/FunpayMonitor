@@ -13,8 +13,8 @@ public class CurrencyService {
     private final BinanceClient binanceClient;
 
     @SneakyThrows
-    public CurrencyRateDto getCurrencyRatesFor(String symbol) {
-        return binanceClient.getCurrencyRates(symbol);
+    public CurrencyRateDto getCurrencyRatesFor() {
+        return binanceClient.getCurrencyRates();
     }
 
 }

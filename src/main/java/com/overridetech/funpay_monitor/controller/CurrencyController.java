@@ -21,13 +21,13 @@ public class CurrencyController {
      * http://localhost:8080/api/v1/currency/rate?symbol=USDTRUB
      * Пример ответа
      * {
-     *   "symbol": "USDTRUB",
-     *   "price": "91.10000000"
+     *   "usdrub": 91.1,
+     *   "rubusd": 0.01098
      * }
      */
     @GetMapping("/rate")
-    public CurrencyRateDto getCurrencyRateFor(@RequestParam String symbol) {
-        return currencyService.getCurrencyRatesFor(symbol);
+    public CurrencyRateDto getCurrencyRateFor() {
+        return currencyService.getCurrencyRatesFor();
     }
 
 

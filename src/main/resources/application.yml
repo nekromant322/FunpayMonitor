@@ -10,4 +10,4 @@ cache:
       time-unit: minutes
 
 binance:
-  currency-rate-url: https://api.binance.com/api/v3/ticker/price?symbol=
+  currency-rate-url: https://api.binance.com/api/v3/ticker/price?symbol=USDTRUB

@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 public class CurrencyRateDto {
-    private String symbol;
-    private BigDecimal price;
+    private BigDecimal usdrub;
+    private BigDecimal rubusd;
 }
+
