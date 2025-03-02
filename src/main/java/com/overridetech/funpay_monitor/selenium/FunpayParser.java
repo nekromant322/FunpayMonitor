@@ -14,7 +14,6 @@ public class FunpayParser {
 
     private final FunpayPOM funpayPOM;
 
-
     public CurrencyRateDto getExcangeRate() {
         try {
             BigDecimal priceInRub = funpayPOM.getBasePage().getPrice("₽");

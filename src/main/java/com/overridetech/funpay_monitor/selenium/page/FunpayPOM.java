@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -33,14 +34,20 @@ public class FunpayPOM {
     private final By CurrencySign = By.xpath("(//span[@class='unit'])[1]");
 
     public FunpayPOM getBasePage() {
-        webDriver = new ChromeDriver();
-        webDriver.manage().window().maximize();
-        webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(4));
+        initDriver();
         webDriver.get(baseUrl);
 
-        wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
-
         return this;
+    }
+
+    public void initDriver() {
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless");
+        options.addArguments("--disable-gpu");
+        options.addArguments("--window-size=1920,1080");
+        webDriver = new ChromeDriver(options);
+        webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(4));
+        wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
     }
 
     public BigDecimal getPrice(String currencySign) {
