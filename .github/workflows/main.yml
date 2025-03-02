@@ -85,7 +85,7 @@ jobs:
             
             echo " Останавливаем и удаляем старые контейнеры..."
             docker compose stop funpay_monitor
-        
+            docker compose stop selenium-chrome
       
             echo " Запускаем новую версию контейнеров..."
             docker-compose pull
