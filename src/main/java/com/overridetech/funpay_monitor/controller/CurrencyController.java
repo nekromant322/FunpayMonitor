@@ -17,14 +17,7 @@ public class CurrencyController {
     private final CurrencyService currencyService;
 
 
-    /* Пример запроса
-     * http://localhost:8080/api/v1/currency/rate?symbol=USDTRUB
-     * Пример ответа
-     * {
-     *   "usdrub": 91.1,
-     *   "rubusd": 0.01098
-     * }
-     */
+
     @GetMapping("/rate")
     public CurrencyRateDto getCurrencyRateFor() {
         return currencyService.getCurrencyRatesFor();
