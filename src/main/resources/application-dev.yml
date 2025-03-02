@@ -1,16 +1,14 @@
 spring:
   application:
     name: funpay-monitor
-  profiles:
-    active: dev
 
   datasource:
     hikari:
       connectionTimeout: '20000'
       maximumPoolSize: '5'
-    url: jdbc:postgresql://funpay_monitor_db:5432/postgres
-    username: ${DATABASE_USERNAME:postgres}
-    password: ${DATABASE_PASSWORD:1234}
+    url: jdbc:postgresql://localhost:5432/java_test_con
+    username: postgres
+    password: 1234
   jpa:
     database: POSTGRESQL
     hibernate:
