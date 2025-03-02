@@ -28,8 +28,6 @@ public class FunpayParser {
             currencyRateDto.setUsdrub(usdRub);
             currencyRateDto.setRubusd(rubUsd);
             return currencyRateDto;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
         } finally {
             funpayPOM.closeWebDriver();
         }

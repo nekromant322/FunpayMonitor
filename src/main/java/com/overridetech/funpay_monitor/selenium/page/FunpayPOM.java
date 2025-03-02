@@ -5,6 +5,7 @@ import lombok.SneakyThrows;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
@@ -60,8 +61,10 @@ public class FunpayPOM {
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--disable-gpu");
         options.addArguments("--window-size=1920,1080");
+        options.setCapability(CapabilityType.BROWSER_NAME, "chrome");
+        options.setCapability(CapabilityType.PLATFORM_NAME, "LINUX");
 //        webDriver = new ChromeDriver(options);
-        webDriver = new RemoteWebDriver(URI.create(SELENIUM_URL).toURL(), options);
+        webDriver = new RemoteWebDriver(URI.create("http://selenium-chrome:4444/wd/hub").toURL(), options);
         webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(4));
         wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
     }
