@@ -46,6 +46,8 @@ services:
   selenium-chrome:
     image: selenium/standalone-chrome:latest
     container_name: selenium-chrome
+    environment:
+      - SE_OPTS=--remote-debugging-port=9222
     ports:
       - "4444:4444"
       - "9222:9222"
