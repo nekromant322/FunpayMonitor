@@ -14,5 +14,6 @@ spring:
       ddl-auto: create-drop
 app:
   scrapRate: '60000'
-
-
+  webDriver: /app/chromedriver
+  selenium:
+    url: http://selenium-chrome:4444/wd/hub

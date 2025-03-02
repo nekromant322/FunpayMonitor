@@ -4,6 +4,7 @@ services:
     image: nekromant322/funpay-monitor:latest
     depends_on:
       - funpay_monitor_db
+      - selenium-chrome
     environment:
       - DATABASE_USERNAME=$DATABASE_USERNAME
       - DATABASE_PASSWORD=$DATABASE_PASSWORD
@@ -42,6 +43,15 @@ services:
       options:
         max-size: "50m"
         max-file: "1"
+
+  selenium-chrome:
+    image: selenium/standalone-chrome:latest
+    container_name: selenium-chrome
+    ports:
+      - "4444:4444"
+    networks:
+      - postgres
+    shm_size: 2g
 
 networks:
   postgres:

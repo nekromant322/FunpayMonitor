@@ -15,3 +15,7 @@ spring:
       ddl-auto: create-drop
 app:
   scrapRate: '60000'
+  webDriver: C:\Users\world\Desktop\java cringe\FunpayMonitor\drivers\chromedriver_for_win.exe
+
+  selenium:
+    url: http://selenium-chrome:4444/wd/hub
