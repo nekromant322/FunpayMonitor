@@ -47,7 +47,11 @@ services:
     image: selenium/standalone-chrome:latest
     container_name: selenium-chrome
     environment:
-      - SE_OPTS=--remote-debugging-port=9222
+      - SE_NODE_OVERRIDE_MAX_SESSIONS=true
+        - SE_SESSION_REQUEST_TIMEOUT=3000
+        - SE_SESSION_RETRY_INTERVAL=5
+        - SE_NODE_SESSION_TIMEOUT=3000
+        - SE_NODE_MAX_SESSIONS=1
     ports:
       - "4444:4444"
       - "9222:9222"
