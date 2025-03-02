@@ -14,4 +14,3 @@ public class CurrencyRateDto {
     private BigDecimal usdrub;
     private BigDecimal rubusd;
 }
-

@@ -16,11 +16,14 @@ public class CurrencyController {
 
     private final CurrencyService currencyService;
 
-
-
     @GetMapping("/rate")
     public CurrencyRateDto getCurrencyRateFor() {
         return currencyService.getCurrencyRatesFor();
+    }
+
+    @GetMapping("/selenium/rate")
+    public CurrencyRateDto getCurrencyRateWithSelenium() {
+        return  currencyService.getCurrencyRatesWithSelenium();
     }
 
 
