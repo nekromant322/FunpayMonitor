@@ -23,19 +23,19 @@ public class FunpayPOM {
     private Wait<WebDriver> wait;
 
     @Value(value = "${funpay.base-url}")
-    private String baseUrl;
+    private String BASE_URL;
 
-    private final By navbarWidgetButton = By.xpath("//a[contains(@class, 'dropdown-toggle menu-item-currencies')]");
+    private final By NAVBAR_WIDGET_BUTTON = By.xpath("//a[contains(@class, 'dropdown-toggle menu-item-currencies')]");
 
-    private final By usdRateLink = By.xpath("//a[@data-cy=\"usd\"]");
+    private final By USD_RATE_LINK = By.xpath("//a[@data-cy=\"usd\"]");
 
-    private final By firstLootPrice = By.xpath("(//div[contains(@class, 'tc-price')])[2]");
+    private final By FIRST_LOOT_PRICE = By.xpath("(//div[contains(@class, 'tc-price')])[2]");
 
-    private final By CurrencySign = By.xpath("(//span[@class='unit'])[1]");
+    private final By CURRENCY_SIGN = By.xpath("(//span[@class='unit'])[1]");
 
     public FunpayPOM getBasePage() {
         initDriver();
-        webDriver.get(baseUrl);
+        webDriver.get(BASE_URL);
 
         return this;
     }
@@ -51,18 +51,18 @@ public class FunpayPOM {
     }
 
     public BigDecimal getPrice(String currencySign) {
-        wait.until(ExpectedConditions.textToBePresentInElementLocated(CurrencySign, currencySign));
-        String price = webDriver.findElement(firstLootPrice).getAttribute("data-s");
+        wait.until(ExpectedConditions.textToBePresentInElementLocated(CURRENCY_SIGN, currencySign));
+        String price = webDriver.findElement(FIRST_LOOT_PRICE).getAttribute("data-s");
         return new BigDecimal(Objects.requireNonNull(price));
     }
 
     public FunpayPOM openNavBarCurrencyWidget() {
-        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(navbarWidgetButton)).getFirst().click();
+        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(NAVBAR_WIDGET_BUTTON)).getFirst().click();
         return this;
     }
 
     public FunpayPOM switchCurrencyToUSD() {
-        wait.until(ExpectedConditions.elementToBeClickable(usdRateLink)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(USD_RATE_LINK)).click();
         return this;
     }
 

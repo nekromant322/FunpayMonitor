@@ -3,6 +3,7 @@ package com.overridetech.funpay_monitor.selenium;
 import com.overridetech.funpay_monitor.dto.CurrencyRateDto;
 import com.overridetech.funpay_monitor.selenium.page.FunpayPOM;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -14,6 +15,8 @@ public class FunpayParser {
 
     private final FunpayPOM funpayPOM;
 
+
+    @Cacheable(cacheNames = "currency-rate-funpay")
     public CurrencyRateDto getExcangeRate() {
         try {
             BigDecimal priceInRub = funpayPOM.getBasePage().getPrice("₽");
