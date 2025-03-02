@@ -86,6 +86,13 @@ public class FunpayPOM {
     }
 
     public void closeWebDriver() {
-        webDriver.quit();
+        if (webDriver != null) {
+            try {
+                webDriver.quit();
+                System.out.println("WebDriver завершён корректно.");
+            } catch (Exception e) {
+                System.err.println("Ошибка при закрытии WebDriver: " + e.getMessage());
+            }
+        }
     }
 }

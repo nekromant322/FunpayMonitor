@@ -18,7 +18,6 @@ public class FunpayParser {
 
     @Cacheable(cacheNames = "currency-rate-funpay")
     public CurrencyRateDto getExcangeRate() {
-        funpayPOM.getBasePage();
         try {
             BigDecimal priceInRub = funpayPOM.getBasePage().getPrice("₽");
             BigDecimal priceInUsd = funpayPOM.openNavBarCurrencyWidget().switchCurrencyToUSD().getPrice("$");
