@@ -11,3 +11,6 @@ cache:
 
 binance:
   currency-rate-url: https://api.binance.com/api/v3/ticker/price?symbol=USDTRUB
+
+funpay:
+  base-url: https://funpay.com/lots/2434/
