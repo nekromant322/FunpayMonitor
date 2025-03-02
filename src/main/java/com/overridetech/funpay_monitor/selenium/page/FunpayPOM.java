@@ -60,6 +60,12 @@ public class FunpayPOM {
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--disable-gpu");
+
+        options.addArguments("--remote-debugging-port=9222"); // Нужно для DevTools
+        options.addArguments("--disable-software-rasterizer"); // Исправляет баг с графикой
+        options.addArguments("--disable-setuid-sandbox"); // Избегает проблем с правами доступа
+        options.addArguments("--disable-features=VizDisplayCompositor"); // Убирает проблемы с рендерингом
+
         options.addArguments("--window-size=1920,1080");
         options.setCapability(CapabilityType.BROWSER_NAME, "chrome");
         options.setCapability(CapabilityType.PLATFORM_NAME, "LINUX");
