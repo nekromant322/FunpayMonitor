@@ -48,6 +48,7 @@ services:
     container_name: selenium-chrome
     ports:
       - "4444:4444"
+      - "9222:9222"
     networks:
       - postgres
     shm_size: 2g
