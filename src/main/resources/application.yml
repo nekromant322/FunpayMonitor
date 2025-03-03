@@ -1,6 +1,17 @@
 spring:
-  profiles:
-    active: dev
+  application:
+    name: funpay-monitor
+  datasource:
+    hikari:
+      connectionTimeout: '20000'
+      maximumPoolSize: '5'
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: ${DATABASE_USERNAME:postgres}
+    password: ${DATABASE_PASSWORD:changeme}
+  jpa:
+    database: POSTGRESQL
+    hibernate:
+      ddl-auto: create
 
 cache:
   exchange-rate:
@@ -13,3 +24,6 @@ binance:
 
 funpay:
   base-url: https://funpay.com/lots/2434/
+
+app:
+  scrapRate: '60000'

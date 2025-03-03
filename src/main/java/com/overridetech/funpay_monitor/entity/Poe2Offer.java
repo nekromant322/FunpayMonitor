@@ -18,10 +18,12 @@ import java.util.UUID;
 @Setter
 @ToString
 @NoArgsConstructor
-public class Poe2DivineOffer {
+public class Poe2Offer {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID uuid;
+
+    private String item;
 
     private BigDecimal price;
 
