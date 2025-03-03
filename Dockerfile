@@ -2,8 +2,6 @@
 FROM eclipse-temurin:21-jdk
 WORKDIR /app
 
-COPY drivers/chromedriver chromedriver
-RUN chmod +x chromedriver
 
 COPY target/*.jar app.jar
 

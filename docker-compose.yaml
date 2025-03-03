@@ -4,6 +4,7 @@ services:
     image: nekromant322/funpay-monitor:latest
     depends_on:
       - funpay_monitor_db
+      - selenium-chrome
     environment:
       - DATABASE_USERNAME=$DATABASE_USERNAME
       - DATABASE_PASSWORD=$DATABASE_PASSWORD
@@ -44,13 +45,14 @@ services:
         max-file: "1"
 
   selenium-chrome:
-    image: selenium/standalone-chrome:latest
+    image: selenium/standalone-chromium:latest
     container_name: selenium-chrome
     environment:
-      - SE_SESSION_REQUEST_TIMEOUT=3000
+      - SE_SESSION_REQUEST_TIMEOUT=120
       - SE_SESSION_RETRY_INTERVAL=5
-      - SE_NODE_SESSION_TIMEOUT=3000
+      - SE_NODE_SESSION_TIMEOUT=120
       - SE_NODE_MAX_SESSIONS=1
+      - SE_NODE_OVERRIDE_MAX_SESSIONS=true
     ports:
       - "4444:4444"
       - "9222:9222"

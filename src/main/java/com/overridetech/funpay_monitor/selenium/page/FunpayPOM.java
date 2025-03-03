@@ -60,8 +60,9 @@ public class FunpayPOM {
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--disable-gpu");
+        options.addArguments("--disable-webrtc");
 
-        options.addArguments("--remote-debugging-port=9222"); // Нужно для DevTools
+//        options.addArguments("--remote-debugging-port=9222"); // не работает в контейнере
         options.addArguments("--disable-software-rasterizer"); // Исправляет баг с графикой
         options.addArguments("--disable-setuid-sandbox"); // Избегает проблем с правами доступа
         options.addArguments("--disable-features=VizDisplayCompositor"); // Убирает проблемы с рендерингом
