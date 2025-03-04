@@ -13,3 +13,5 @@ binance:
 
 funpay:
   base-url: https://funpay.com/lots/2434/
+  currency-cookies: usd
+
