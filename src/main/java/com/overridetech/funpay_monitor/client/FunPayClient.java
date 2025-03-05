@@ -7,6 +7,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -19,9 +20,13 @@ public class FunPayClient {
     private final static String FUN_PAY_POE2_DIVINES = "https://funpay.com/chips/209/";
     private final static String FUN_PAY_POE2_TABLE_OFFERS = "tc table-hover table-clickable showcase-table tc-sortable tc-lazyload";
 
+    @Value("${funpay.currency-cookies}")
+    private String currencyCookie;
+
 
     public List<String> getHtmls() throws IOException {
-        Document doc = Jsoup.connect(FUN_PAY_POE2_DIVINES).userAgent("Mozilla").get();
+
+        Document doc = Jsoup.connect(FUN_PAY_POE2_DIVINES).userAgent("Mozilla").cookie("cy", currencyCookie).get();
 
         Elements elements = doc.getElementsByClass(FUN_PAY_POE2_TABLE_OFFERS);
 
