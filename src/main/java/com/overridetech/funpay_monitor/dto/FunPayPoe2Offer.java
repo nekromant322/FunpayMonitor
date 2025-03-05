@@ -13,6 +13,7 @@ public class FunPayPoe2Offer {
     private String ref;
     private String item;
     private String price;
+    private String priceUnit;
     private String stock;
     private String seller;
     private Boolean isOnline;

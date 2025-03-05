@@ -1,14 +1,17 @@
 package com.overridetech.funpay_monitor.mapper;
 
 import com.overridetech.funpay_monitor.dto.FunPayPoe2Offer;
-import com.overridetech.funpay_monitor.entity.Poe2DivineOffer;
+import com.overridetech.funpay_monitor.entity.Poe2Offer;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
+@Component
 public class Poe2DtoToEntityMapper {
-    public static Poe2DivineOffer mapDtoToEntity(FunPayPoe2Offer dto) {
-        Poe2DivineOffer entity = new Poe2DivineOffer();
+    public Poe2Offer mapDtoToEntity(FunPayPoe2Offer dto) {
+        Poe2Offer entity = new Poe2Offer();
 
+        entity.setItem(dto.getItem());
         entity.setRating(dto.getRating());
         entity.setOnline(dto.getIsOnline());
         entity.setRef(dto.getRef());

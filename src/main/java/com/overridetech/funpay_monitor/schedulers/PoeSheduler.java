@@ -11,13 +11,9 @@ import org.springframework.stereotype.Component;
 public class PoeSheduler {
     private final FunPayService funPayService;
 
-
     @Scheduled(fixedRateString = "${app.scrapRate}")
     public void scarpDivineOffers() {
-       funPayService.scrapDivineOffers();
+        funPayService.scrapOffers();
     }
-
-
-
 
 }
