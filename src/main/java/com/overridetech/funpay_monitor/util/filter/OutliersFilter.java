@@ -1,49 +1,45 @@
 package com.overridetech.funpay_monitor.util.filter;
 
-import com.overridetech.funpay_monitor.dto.FunPayPoe2Offer;
+import com.overridetech.funpay_monitor.dto.Offer;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 @Component
-public class OutliersFilter {
+public class OutliersFilter<T extends Offer> {
 
-    public List<FunPayPoe2Offer> trimDataSet(List<FunPayPoe2Offer> dtoDataSet,
-                                             BigDecimal lowPriceDelta,
-                                             BigDecimal highPriceDelta,
-                                             BigDecimal lowStockDelta,
-                                             BigDecimal highStockDelta) {
-        Stream<FunPayPoe2Offer> stream = dtoDataSet.stream();
+    /**
+     * Rejects offers with an abnormally high or low price
+     * using Interquartile range algorithm, with the difference
+     * that multipliers are added separately to determine the upper and lower limits
+     * and truncate by stock's lower limit
+     */
+    public List<T> trimDataSet(List<T> dtoDataSet,
+                               Double lowPriceDelta,
+                               Double highPriceDelta,
+                               Double minStock) {
+        Stream<T> stream = dtoDataSet.stream();
 
         if (lowPriceDelta != null) {
 
-            List<BigDecimal> priceDataSet = dtoDataSet.stream()
-                    .map(FunPayPoe2Offer::getPrice)
-                    .map(BigDecimal::new)
+            List<Double> priceDataSet = dtoDataSet.stream()
+                    .map(Offer::getPrice)
+                    .map(Double::parseDouble)
                     .toList();
             IQR priceIQR = getIQR(priceDataSet, lowPriceDelta, highPriceDelta);
-            Predicate<BigDecimal> predicate = getFilter(priceIQR);
+            Predicate<Double> predicate = getFilter(priceIQR);
 
-            stream = stream.filter(funPayPoe2Offer -> {
-                BigDecimal price = new BigDecimal(funPayPoe2Offer.getPrice());
+            stream = stream.filter(offer -> {
+                Double price = Double.parseDouble(offer.getPrice());
                 return predicate.test(price);
             });
         }
-        if (lowStockDelta != null) {
-
-            List<BigDecimal> stockDataSet = dtoDataSet.stream()
-                    .map(FunPayPoe2Offer::getStock)
-                    .map(BigDecimal::new)
-                    .toList();
-            IQR stockIQR = getIQR(stockDataSet, lowStockDelta, highStockDelta);
-            Predicate<BigDecimal> predicate = getFilter(stockIQR);
-
-            stream = stream.filter(funPayPoe2Offer -> {
-                BigDecimal stock = new BigDecimal(funPayPoe2Offer.getStock());
-                return predicate.test(stock);
+        if (minStock != null) {
+            stream = stream.filter(offer -> {
+                Double stock = Double.valueOf(offer.getStock());
+                return stock >= minStock;
             });
         }
 
@@ -51,29 +47,29 @@ public class OutliersFilter {
     }
 
 
-    record IQR(BigDecimal q1, BigDecimal q3, BigDecimal iqr, BigDecimal lowDeltaIQR, BigDecimal higDeltaIQR) {
+    record IQR(Double q1, Double q3, Double iqr, Double lowDeltaIQR, Double higDeltaIQR) {
     }
 
-    private IQR getIQR(List<BigDecimal> unsortedDataSet, BigDecimal lowDeltaIQR, BigDecimal higDeltaIQR) {
-        List<BigDecimal> sortedDataSet = unsortedDataSet.stream().sorted().toList();
+    private IQR getIQR(List<Double> unsortedDataSet, Double lowDeltaIQR, Double higDeltaIQR) {
+        List<Double> sortedDataSet = unsortedDataSet.stream().sorted().toList();
 
         int indexQ1 = (sortedDataSet.size() / 4);
         int indexQ3 = (sortedDataSet.size() / 4 * 3);
 
-        BigDecimal q1 = sortedDataSet.get(indexQ1);
-        BigDecimal q3 = sortedDataSet.get(indexQ3);
-        BigDecimal iqr = q3.subtract(q1);
+        Double q1 = sortedDataSet.get(indexQ1);
+        Double q3 = sortedDataSet.get(indexQ3);
+        Double iqr = q3 - q1;
         return new IQR(q1, q3, iqr, lowDeltaIQR, higDeltaIQR);
     }
 
-    private Predicate<BigDecimal> getFilter(IQR iqr) {
-        BigDecimal lowDelta = iqr.lowDeltaIQR();
-        BigDecimal highDelta = iqr.higDeltaIQR();
+    private Predicate<Double> getFilter(IQR iqr) {
+        Double lowDelta = iqr.lowDeltaIQR();
+        Double highDelta = iqr.higDeltaIQR();
 
         if (lowDelta != null && highDelta != null) {
             return (n) ->
-                    n.compareTo(iqr.q1().subtract(lowDelta.multiply(iqr.iqr().multiply(BigDecimal.valueOf(0.1))))) >= 0
-                            && n.compareTo(iqr.q3().add(highDelta.multiply(iqr.iqr()))) <= 0;
+                    n >= (iqr.q1() - lowDelta * iqr.iqr() * 0.1)
+                            && n <= (iqr.q3() + highDelta * iqr.iqr());
         }
         return n -> true;
     }
