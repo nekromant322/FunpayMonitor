@@ -2,6 +2,7 @@ package com.overridetech.funpay_monitor.dto;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Getter
@@ -9,7 +10,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class FunPayPoe2Offer {
+public class FunPayPoe2Offer implements Offer{
     private String ref;
     private String item;
     private String price;

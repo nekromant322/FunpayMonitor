@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -23,7 +22,7 @@ public class Poe2DivineOffer {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID uuid;
 
-    private BigDecimal price;
+    private Double price;
 
     private Long stock;
 

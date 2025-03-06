@@ -18,13 +18,30 @@ public class Poe2DtoToEntityMapper {
         entity.setLeague(dto.getServer());
 
         try {
-            entity.setPrice(new BigDecimal(dto.getPrice()));
+            entity.setPrice(Double.parseDouble(dto.getPrice()));
             entity.setStock(Long.valueOf(dto.getStock()));
         } catch (Exception e) {
-            entity.setPrice(BigDecimal.ZERO);
+            entity.setPrice(Double.NaN);
             entity.setStock(0L);
         }
 
         return entity;
     }
+
+    public static FunPayPoe2Offer mapEntityToDto(Poe2DivineOffer entity) {
+        FunPayPoe2Offer dto = new FunPayPoe2Offer();
+
+        dto.setRef(entity.getRef());
+        dto.setSeller(entity.getSeller());
+        dto.setIsOnline(entity.getOnline());
+        dto.setServer(entity.getLeague());
+        dto.setRating(entity.getRating());
+        dto.setExperience(entity.getExperience());
+        dto.setTime(entity.getTime());
+        dto.setPrice(entity.getPrice().toString());
+        dto.setStock(String.valueOf(entity.getStock()));
+
+        return dto;
+    }
+
 }

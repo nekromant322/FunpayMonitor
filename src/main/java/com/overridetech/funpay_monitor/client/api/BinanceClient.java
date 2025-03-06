@@ -9,9 +9,6 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Objects;
@@ -43,9 +40,8 @@ public class BinanceClient {
 
     private CurrencyRateDto computeCurrencyRates(Map responseBody) {
         CurrencyRateDto currencyRateDto = new CurrencyRateDto();
-        BigDecimal usdRub = new BigDecimal((String) Objects.requireNonNull(responseBody).get("price"))
-                .round(new MathContext(5, RoundingMode.HALF_UP));
-        BigDecimal rubUsd = BigDecimal.ONE.divide(usdRub, 5, RoundingMode.HALF_UP);
+        Double usdRub = Double.valueOf((String) Objects.requireNonNull(responseBody).get("price"));
+        Double rubUsd = 1 / usdRub;
 
         currencyRateDto.setUsdrub(usdRub);
         currencyRateDto.setRubusd(rubUsd);

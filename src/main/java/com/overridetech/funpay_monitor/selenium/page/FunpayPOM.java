@@ -11,7 +11,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.Objects;
 
@@ -50,10 +49,10 @@ public class FunpayPOM {
         wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
     }
 
-    public BigDecimal getPrice(String currencySign) {
+    public Double getPrice(String currencySign) {
         wait.until(ExpectedConditions.textToBePresentInElementLocated(CURRENCY_SIGN, currencySign));
         String price = webDriver.findElement(FIRST_LOOT_PRICE).getAttribute("data-s");
-        return new BigDecimal(Objects.requireNonNull(price));
+        return Double.valueOf(Objects.requireNonNull(price));
     }
 
     public FunpayPOM openNavBarCurrencyWidget() {
