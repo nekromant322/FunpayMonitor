@@ -12,5 +12,6 @@ import org.springframework.stereotype.Component;
 public class GoogleServiceProperties {
 
     private String authPath;
+    private String poeDivineId;
 
 }
