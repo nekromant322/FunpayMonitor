@@ -15,4 +15,7 @@ spring:
 app:
   scrapRate: '60000'
 
+google:
+  auth-path: ${GOOGLE_CREDENTIALS_PATH}
+
 

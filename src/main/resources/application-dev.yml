@@ -15,3 +15,6 @@ spring:
       ddl-auto: create-drop
 app:
   scrapRate: '60000'
+
+google:
+  auth-path: google_sheet_auth.json
