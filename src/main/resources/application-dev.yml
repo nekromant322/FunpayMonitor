@@ -12,6 +12,7 @@ spring:
   jpa:
     database: POSTGRESQL
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
 app:
   scrapRate: '60000'
+
