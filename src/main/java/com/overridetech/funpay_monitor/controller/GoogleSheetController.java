@@ -2,6 +2,7 @@ package com.overridetech.funpay_monitor.controller;
 
 
 import com.google.api.services.drive.model.Permission;
+import com.overridetech.funpay_monitor.service.FunPayService;
 import com.overridetech.funpay_monitor.service.GoogleSheetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +19,7 @@ import java.time.Duration;
 public class GoogleSheetController {
 
     private final GoogleSheetService googleSheetService;
+    private final FunPayService funPayService;
 
     @GetMapping("/table")
     public String googleSheet(@RequestParam String tableName) {
@@ -32,9 +34,9 @@ public class GoogleSheetController {
         return googleSheetService.grantPermission(mail, tableId);
     }
 
-    @GetMapping("/refresh")
-    public String refresh(@Value("${google-sheet.poe-divine-id}") String id) {
-        googleSheetService.refreshAvgPrice(id, Duration.ofHours(1));
+    @GetMapping("/refresh/divine")
+    public String refresh() {
+        funPayService.refreshAvgPrice(Duration.ofHours(1));
         return "refreshed";
     }
 
