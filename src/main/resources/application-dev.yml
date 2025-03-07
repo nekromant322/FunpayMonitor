@@ -16,5 +16,3 @@ spring:
 app:
   scrapRate: '60000'
 
-google:
-  auth-path: google_sheet_auth.json

@@ -1,33 +1,32 @@
 package com.overridetech.funpay_monitor.schedulers;
 
 
-import com.overridetech.funpay_monitor.config.property.GoogleServiceProperties;
 import com.overridetech.funpay_monitor.service.FunPayService;
 import com.overridetech.funpay_monitor.service.GoogleSheetService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
-import java.time.LocalTime;
-import java.util.concurrent.TimeUnit;
 
 @Component
 @RequiredArgsConstructor
 public class PoeSheduler {
     private final FunPayService funPayService;
     private final GoogleSheetService googleSheetService;
-    private final GoogleServiceProperties googleServiceProperties;
+
+    @Value("${google-sheet.poe-divine-id}")
+    private String id;
 
     @Scheduled(fixedRateString = "${app.scrapRate}")
     public void scarpDivineOffers() {
-       funPayService.scrapDivineOffers();
+        funPayService.scrapDivineOffers();
     }
 
-//    получать список всех id из бд и рефрешить каждую
+    //todo    получать список всех id из бд и рефрешить каждую
     @Scheduled(cron = "0 0 * * * ?")
-    public void refreshAvgPrice(){
-        String id = googleServiceProperties.getPoeDivineId();
+    public void refreshAvgPrice() {
         googleSheetService.refreshAvgPrice(id, Duration.ofHours(1));
     }
 

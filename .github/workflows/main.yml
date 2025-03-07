@@ -47,6 +47,8 @@ jobs:
         run: |
           echo "DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }}" >> $GITHUB_ENV
           echo "DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}" >> $GITHUB_ENV
+          echo "DATABASE_PASSWORD=${{ secrets.GOOGLE_PRIVATE_KEY_ID }}" >> $GITHUB_ENV
+          echo "DATABASE_PASSWORD=${{ secrets.GOOGLE_PRIVATE_ID }}" >> $GITHUB_ENV
 
       # 2. Генерируем docker-compose.yml из шаблона
       - name: Generate docker-compose from template
@@ -85,8 +87,8 @@ jobs:
             
             echo " Останавливаем и удаляем старые контейнеры..."
             docker compose stop funpay_monitor
-        
-      
+            
+            
             echo " Запускаем новую версию контейнеров..."
             docker-compose pull
             docker-compose up -d --remove-orphans  --wait
