@@ -13,7 +13,7 @@ spring:
     hibernate:
       ddl-auto: update
 app:
-  scrapRate: '60000'
+  scrapRate: '3600000'
 
 google:
   private-key-id: ${GOOGLE_PRIVATE_KEY_ID}

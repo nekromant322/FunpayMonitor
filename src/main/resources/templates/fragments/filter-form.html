@@ -1,0 +1,38 @@
+<form  th:fragment="filter-form" th:if="${filterArgDto.category != null}"
+      th:action="@{/admin/apply-filters}"
+      method="post" class="container mt-3">
+    <input type="hidden" name="_method" value="patch">
+    <input type="hidden" id="category" name="category" th:value="${filterArgDto.category}">
+
+    <h4>Выбрать фильтры</h4>
+
+    <div class="mb-3" th:if="${filterArgDto.minStock != null}">
+        <label for="minStock" class="form-label">Минимальный остаток</label>
+        <input type="number" id="minStock" name="minStock" class="form-control" th:value="${filterArgDto.minStock}">
+    </div>
+
+    <div class="mb-3" th:if="${filterArgDto.maxStock != null}">
+        <label for="maxStock" class="form-label">Максимальный остаток</label>
+        <input type="number" id="maxStock" name="maxStock" class="form-control" th:value="${filterArgDto.maxStock}">
+    </div>
+
+    <div class="mb-3" th:if="${filterArgDto.minPrice != null}">
+        <label for="minPrice" class="form-label">Минимальная цена</label>
+        <input type="number" id="minPrice" name="minPrice" class="form-control" step="0.01"
+               th:value="${filterArgDto.minPrice}">
+    </div>
+
+    <div class="mb-3" th:if="${filterArgDto.maxPrice != null}">
+        <label for="maxPrice" class="form-label">Максимальная цена</label>
+        <input type="number" id="maxPrice" name="maxPrice" class="form-control" step="0.01"
+               th:value="${filterArgDto.maxPrice}">
+    </div>
+
+    <div class="form-check mb-3" th:if="${filterArgDto.checkForOnline != null}">
+        <input type="checkbox" id="checkForOnline" name="checkForOnline" class="form-check-input"
+               th:checked="${filterArgDto.checkForOnline}">
+        <label for="checkForOnline" class="form-check-label">Товар доступен для онлайн-заказа</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Применить фильтры</button>
+</form>
