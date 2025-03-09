@@ -2,19 +2,19 @@
     <h4>Фильтры применяемые для категории <span th:text="${filterArgDto.category}"></span></h4>
 
     <div class="alert alert-info" role="alert">
-        <p th:if="${filterArgDto.minStock != null}">
-            <strong>minStock:</strong>  - минимальное количество единиц товара у продавца.
+        <p th:if="${filterArgDto != null and filterArgDto instanceof T(com.overridetech.funpay_monitor.dto.FilterArgDto)}">
+            <strong>minStock:</strong> - минимальное количество единиц товара у продавца.
         </p>
-        <p th:if="${filterArgDto.maxStock != null}">
-            <strong>maxStock:</strong>  - максимальное количество единиц товара у продавца.
+        <p th:if="${filterArgDto != null and filterArgDto instanceof T(com.overridetech.funpay_monitor.dto.FilterArgDto)}">
+            <strong>maxStock:</strong> - максимальное количество единиц товара у продавца.
         </p>
-        <p th:if="${filterArgDto.minPrice != null}">
-            <strong>minPrice:</strong>  - минимальная стоимость за штуку у продавца.
+        <p th:if="${filterArgDto != null and filterArgDto instanceof T(com.overridetech.funpay_monitor.dto.FilterArgDto)}">
+            <strong>minPrice:</strong> - минимальная стоимость за штуку у продавца.
         </p>
-        <p th:if="${filterArgDto.maxPrice != null}">
-            <strong>maxPrice:</strong>  - максимальная стоимость за штуку у продавца.
+        <p th:if="${filterArgDto != null and filterArgDto instanceof T(com.overridetech.funpay_monitor.dto.FilterArgDto)}">
+            <strong>maxPrice:</strong> - максимальная стоимость за штуку у продавца.
         </p>
-        <p th:if="${filterArgDto.checkForOnline != null}">
+        <p th:if="${filterArgDto != null and filterArgDto instanceof T(com.overridetech.funpay_monitor.dto.FilterArgDto)}">
             <strong>checkForOnline:</strong> - находится ли продавец в сети.
         </p>
     </div>

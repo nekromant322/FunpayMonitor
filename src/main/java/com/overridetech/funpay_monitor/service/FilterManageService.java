@@ -1,6 +1,7 @@
 package com.overridetech.funpay_monitor.service;
 
 import com.overridetech.funpay_monitor.dto.FilterArgDto;
+import com.overridetech.funpay_monitor.entity.BaseFilterArgTable;
 import com.overridetech.funpay_monitor.mapper.FilterArgMapper;
 import com.overridetech.funpay_monitor.repository.FilterArgRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,9 @@ public class FilterManageService {
 
     @Transactional
     public FilterArgDto updateFilter(FilterArgDto filterArgDto, String category) {
-        filterArgRepository.updateNonNullField(filterArgDto, category);
+        BaseFilterArgTable table = filterArgRepository.findByCategoty(category).orElseThrow();
+        FilterArgMapper.updateEntity(table, filterArgDto);
+        filterArgRepository.save(table);
         return FilterArgMapper.mapEntityToDto(filterArgRepository.findByCategoty(category).orElseThrow());
     }
 }

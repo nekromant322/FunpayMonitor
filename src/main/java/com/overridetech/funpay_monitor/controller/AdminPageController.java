@@ -3,6 +3,7 @@ package com.overridetech.funpay_monitor.controller;
 
 import com.overridetech.funpay_monitor.dto.FilterArgDto;
 import com.overridetech.funpay_monitor.service.FilterManageService;
+import com.overridetech.funpay_monitor.service.FunPayService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,7 @@ import java.util.List;
 public class AdminPageController {
 
     private final FilterManageService filterManageService;
+    private final FunPayService funPayService;
 
     @GetMapping
     public String adminPage(
@@ -30,6 +32,12 @@ public class AdminPageController {
         List<String> categories = filterManageService.getAvaliableCategories();
         model.addAttribute("categories", categories);
         return "admin-page";
+    }
+
+    @GetMapping("/scrap")
+    public String  getCurrencyRateWithSelenium() {
+        funPayService.scrapDivineOffers();
+        return "";
     }
 
     @PatchMapping("/apply-filters")

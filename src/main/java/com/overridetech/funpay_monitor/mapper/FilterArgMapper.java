@@ -15,4 +15,13 @@ public class FilterArgMapper {
                 entity.getCheckForOnline()
         );
     }
+
+    public static void updateEntity(BaseFilterArgTable table, FilterArgDto filterArgDto) {
+        table.setCategory(filterArgDto.getCategory());
+        table.setMinStock(filterArgDto.getMinStock());
+        table.setMaxStock(filterArgDto.getMaxStock());
+        table.setMinPrice(filterArgDto.getMinPrice());
+        table.setMaxPrice(filterArgDto.getMaxPrice());
+        table.setCheckForOnline(filterArgDto.getCheckForOnline());
+    }
 }
