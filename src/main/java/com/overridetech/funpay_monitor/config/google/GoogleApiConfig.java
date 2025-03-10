@@ -22,7 +22,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.GeneralSecurityException;
-import java.util.Collections;
 import java.util.List;
 
 
@@ -55,19 +54,13 @@ public class GoogleApiConfig {
 
     @Bean("spreadSheetScopeHttpRequestInitializer")
     public HttpRequestInitializer ssHttpRequestInitializer(GoogleCredentials credentials) {
-        final List<String> SCOPES =
-                Collections.singletonList(SheetsScopes.SPREADSHEETS);
-
-
+        final List<String> SCOPES = List.of(SheetsScopes.SPREADSHEETS);
         return new HttpCredentialsAdapter(credentials.createScoped(SCOPES));
     }
 
     @Bean("driveScopeHttpRequestInitializer")
     public HttpRequestInitializer driveHttpRequestInitializer(GoogleCredentials credentials) {
-        final List<String> SCOPES =
-                Collections.singletonList(SheetsScopes.DRIVE);
-
-
+        final List<String> SCOPES = List.of(SheetsScopes.DRIVE);
         return new HttpCredentialsAdapter(credentials.createScoped(SCOPES));
     }
 

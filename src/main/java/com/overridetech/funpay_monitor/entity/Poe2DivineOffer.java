@@ -1,5 +1,6 @@
 package com.overridetech.funpay_monitor.entity;
 
+import com.overridetech.funpay_monitor.integration.googlesheet.Exportable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,6 +11,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -17,7 +19,7 @@ import java.util.UUID;
 @Setter
 @ToString
 @NoArgsConstructor
-public class Poe2DivineOffer {
+public class Poe2DivineOffer implements Exportable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID uuid;
@@ -39,4 +41,9 @@ public class Poe2DivineOffer {
     private String rating;
 
     private String experience;
+
+    @Override
+    public List<Object> prepareToExport() {
+        return List.of(uuid, price, stock, seller, ref, league, online, time, rating, experience);
+    }
 }

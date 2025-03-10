@@ -2,7 +2,7 @@ package com.overridetech.funpay_monitor.integration.googlesheet;
 
 import java.util.List;
 
-public interface Listable {
+public interface Exportable {
 
-    List<Object> toList();
+    List<Object> prepareToExport();
 }

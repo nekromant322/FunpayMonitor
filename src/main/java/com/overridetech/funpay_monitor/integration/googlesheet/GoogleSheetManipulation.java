@@ -27,9 +27,9 @@ public class GoogleSheetManipulation {
     private final static String RANGE_TO_CLEAR_WITHOUT_HEADERS = "Sheet1!A2:Z";
 
 
-    public List<List<Object>> refreshData(String tableId, List<Listable> dataSet) {
+    public List<List<Object>> refreshData(String tableId, List<Exportable> dataSet) {
         List<List<Object>> values = dataSet.stream()
-                .map(Listable::toList)
+                .map(Exportable::prepareToExport)
                 .collect(Collectors.toList());
 
         int numRows = values.size();

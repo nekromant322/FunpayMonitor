@@ -3,6 +3,7 @@ package com.overridetech.funpay_monitor.service;
 import com.google.api.services.drive.model.Permission;
 import com.overridetech.funpay_monitor.dto.FunPayPoe2Offer;
 import com.overridetech.funpay_monitor.entity.Poe2DivineOffer;
+import com.overridetech.funpay_monitor.integration.googlesheet.Exportable;
 import com.overridetech.funpay_monitor.integration.googlesheet.GoogleSheetManipulation;
 import com.overridetech.funpay_monitor.mapper.Poe2DtoToEntityMapper;
 import com.overridetech.funpay_monitor.repository.Poe2DivineOfferRepository;
@@ -32,6 +33,10 @@ public class GoogleSheetService {
         String range = "Sheet1!A2:B";
         List<List<Object>> dataSet = List.of(List.of(getAvgPrice(offers), LocalDateTime.now().toString()));
         googleSheet.append(tableId, dataSet, range);
+    }
+
+    public void refreshDto(String tableId, Exportable dto) {
+        googleSheet.refreshData(tableId, List.of(dto));
     }
 
 
