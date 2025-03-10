@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @Slf4j
@@ -26,14 +27,18 @@ public class GoogleSheetManipulation {
     private final static String RANGE_TO_CLEAR_WITHOUT_HEADERS = "Sheet1!A2:Z";
 
 
-    public void refreshObject(String tableId, String sheetName, List<List<Object>> values) {
+    public List<List<Object>> refreshData(String tableId, List<Listable> dataSet) {
+        List<List<Object>> values = dataSet.stream()
+                .map(Listable::toList)
+                .collect(Collectors.toList());
 
         int numRows = values.size();
         int numCols = values.isEmpty() ? 0 : values.get(0).size();
-        String range = calculateRange(numRows, numCols, sheetName);
+        String range = calculateRange(numRows, numCols);
 
         clearSheet(tableId, RANGE_TO_CLEAR_WITHOUT_HEADERS);
         write(tableId, values, range);
+        return get(tableId, range);
     }
 
 
@@ -57,13 +62,6 @@ public class GoogleSheetManipulation {
                 .execute();
     }
 
-    public void appendObject(String tableId, String sheetName, List<List<Object>> values) {
-        int numRows = values.size();
-        int numCols = values.isEmpty() ? 0 : values.get(0).size();
-        String range = calculateRange(numRows, numCols, sheetName);
-        append(tableId, values, range);
-    }
-
     @SneakyThrows
     public void append(String tableId, List<List<Object>> values, String range) {
 
@@ -84,6 +82,12 @@ public class GoogleSheetManipulation {
                 .execute();
     }
 
+
+    private static String calculateRange(int numRows, int numCols) {
+        char lastColumn = (char) (START_CELL.charAt(0) + numCols - 1);
+        int lastRow = Character.getNumericValue(START_CELL.charAt(1)) + numRows - 1;
+        return "Sheet1!" + START_CELL + ":" + lastColumn + lastRow;
+    }
 
     @SneakyThrows
     public String createGoogleSheet(String tableName) {
@@ -109,12 +113,4 @@ public class GoogleSheetManipulation {
         return drive.permissions().create(tableId, permission).execute();
 
     }
-
-    private static String calculateRange(int numRows, int numCols, String sheetName) {
-        char lastColumn = (char) (START_CELL.charAt(0) + numCols - 1);
-        int lastRow = Character.getNumericValue(START_CELL.charAt(1)) + numRows - 1;
-        return sheetName + "!" + START_CELL + ":" + lastColumn + lastRow;
-    }
-
-
 }
