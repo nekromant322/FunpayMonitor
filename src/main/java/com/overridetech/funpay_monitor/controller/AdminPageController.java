@@ -17,7 +17,6 @@ import java.util.List;
 public class AdminPageController {
 
     private final FilterManageService filterManageService;
-    private final FunPayService funPayService;
 
     @GetMapping
     public String adminPage(

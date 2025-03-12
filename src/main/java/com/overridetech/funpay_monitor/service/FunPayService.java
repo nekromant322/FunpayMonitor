@@ -1,9 +1,11 @@
 package com.overridetech.funpay_monitor.service;
 
 import com.overridetech.funpay_monitor.client.FunPayClient;
-import com.overridetech.funpay_monitor.dto.FunPayPoe2Offer;
+import com.overridetech.funpay_monitor.dto.BaseOffer;
+import com.overridetech.funpay_monitor.entity.Category;
 import com.overridetech.funpay_monitor.mapper.Poe2DtoToEntityMapper;
 import com.overridetech.funpay_monitor.parser.FunPayPoe2Parser;
+import com.overridetech.funpay_monitor.repository.CategoryRepository;
 import com.overridetech.funpay_monitor.repository.Poe2DivineOfferRepository;
 import com.overridetech.funpay_monitor.util.filter.OutliersFilter;
 import lombok.RequiredArgsConstructor;
@@ -20,16 +22,21 @@ import java.util.Objects;
 public class FunPayService {
 
     private final FunPayClient client;
-    private final Poe2DivineOfferRepository repository;
-    private final OutliersFilter<FunPayPoe2Offer> outliersFilter;
+    private final Poe2DivineOfferRepository offerRepository;
+    private final CategoryRepository categoryRepository;
+    private final OutliersFilter<BaseOffer> outliersFilter;
+    private final FunPayPoe2Parser funPayPoe2Parser;
 
-    public void scrapDivineOffers() {
+
+    public void scrapOffers() {
+
+        Category category = categoryRepository.findByName("POE 2 divine").orElseThrow();
         try {
             LocalDateTime time = LocalDateTime.now();
-            var htmls = client.getHtmls();
+            var htmls = client.getHtmls(category.getUrlForScrap());
 
-            List<FunPayPoe2Offer> dtos = htmls.stream()
-                    .map(FunPayPoe2Parser::parseHtmlToFunPayPoe2Offer)
+            List<BaseOffer> dtos = htmls.stream()
+                    .map(html -> funPayPoe2Parser.parseHtmlToFunPayPoe2Offer(html, category.getName()))
                     .filter(Objects::nonNull)
                     .filter(dto -> dto.getItem().toLowerCase().contains("божеств"))
                     .peek(dto -> dto.setTime(time))
@@ -42,7 +49,7 @@ public class FunPayService {
                     .map(Poe2DtoToEntityMapper::mapDtoToEntity)
                     .toList();
 
-            repository.saveAll(offers);
+            offerRepository.saveAll(offers);
 
         } catch (Exception e) {
             log.error("что-то обосралось при скрапе: {}", e.getMessage());

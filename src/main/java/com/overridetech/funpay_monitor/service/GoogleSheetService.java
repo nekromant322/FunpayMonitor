@@ -1,8 +1,8 @@
 package com.overridetech.funpay_monitor.service;
 
 import com.google.api.services.drive.model.Permission;
-import com.overridetech.funpay_monitor.dto.FunPayPoe2Offer;
-import com.overridetech.funpay_monitor.entity.Poe2DivineOffer;
+import com.overridetech.funpay_monitor.dto.BaseOffer;
+import com.overridetech.funpay_monitor.entity.Offer;
 import com.overridetech.funpay_monitor.integration.googlesheet.Exportable;
 import com.overridetech.funpay_monitor.integration.googlesheet.GoogleSheetManipulation;
 import com.overridetech.funpay_monitor.mapper.Poe2DtoToEntityMapper;
@@ -22,14 +22,14 @@ public class GoogleSheetService {
 
     private final GoogleSheetManipulation googleSheet;
     private final Poe2DivineOfferRepository poe2DivineOfferRepository;
-    private final OutliersFilter<FunPayPoe2Offer> filter;
+    private final OutliersFilter<BaseOffer> filter;
 
     //todo  добавить в таблицу спаршенных данных, колонку категория,
     //      создать таблицу -  название категория, id googletable
     // связать их как 1 к 1
     public void refreshAvgPrice(String tableId, Duration duration) {
         LocalDateTime after = LocalDateTime.now().minus(duration);
-        List<Poe2DivineOffer> offers = poe2DivineOfferRepository.findByTimeAfter(after);
+        List<Offer> offers = poe2DivineOfferRepository.findByTimeAfter(after);
         String range = "Sheet1!A2:B";
         List<List<Object>> dataSet = List.of(List.of(getAvgPrice(offers), LocalDateTime.now().toString()));
         googleSheet.append(tableId, dataSet, range);
@@ -40,8 +40,8 @@ public class GoogleSheetService {
     }
 
 
-    private Double getAvgPrice(List<Poe2DivineOffer> offers) {
-        List<FunPayPoe2Offer> dtos = offers.stream()
+    private Double getAvgPrice(List<Offer> offers) {
+        List<BaseOffer> dtos = offers.stream()
                 .map(Poe2DtoToEntityMapper::mapEntityToDto)
                 .toList();
         dtos = filter.trimDataSet(dtos, 0.1, 0.5, 20d);

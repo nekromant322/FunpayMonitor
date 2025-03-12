@@ -1,10 +1,7 @@
 package com.overridetech.funpay_monitor.entity;
 
 import com.overridetech.funpay_monitor.integration.googlesheet.Exportable;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,10 +16,12 @@ import java.util.UUID;
 @Setter
 @ToString
 @NoArgsConstructor
-public class Poe2DivineOffer implements Exportable {
+public class Offer implements Exportable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID uuid;
+
+    private String category;
 
     private Double price;
 

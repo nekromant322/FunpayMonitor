@@ -24,9 +24,9 @@ public class FunPayClient {
     private String currencyCookie;
 
 
-    public List<String> getHtmls() throws IOException {
+    public List<String> getHtmls(String url) throws IOException {
 
-        Document doc = Jsoup.connect(FUN_PAY_POE2_DIVINES).userAgent("Mozilla").cookie("cy", currencyCookie).get();
+        Document doc = Jsoup.connect(url).userAgent("Mozilla").cookie("cy", currencyCookie).get();
 
         Elements elements = doc.getElementsByClass(FUN_PAY_POE2_TABLE_OFFERS);
 
