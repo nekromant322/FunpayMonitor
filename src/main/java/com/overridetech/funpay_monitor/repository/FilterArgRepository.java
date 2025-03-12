@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface FilterArgRepository extends JpaRepository<BaseFilterArgTable, Long> {
 
-    Optional<BaseFilterArgTable> findByCategoty(String categoty);
+    Optional<BaseFilterArgTable> findByCategory(String category);
 
 
     @Query("select filter.category from BaseFilterArgTable filter")

@@ -2,10 +2,12 @@ package com.overridetech.funpay_monitor.mapper;
 
 import com.overridetech.funpay_monitor.dto.FilterArgDto;
 import com.overridetech.funpay_monitor.entity.BaseFilterArgTable;
+import org.springframework.stereotype.Component;
 
+@Component
 public class FilterArgMapper {
 
-    public static FilterArgDto mapEntityToDto(BaseFilterArgTable entity) {
+    public FilterArgDto mapEntityToDto(BaseFilterArgTable entity) {
         return new FilterArgDto(
                 entity.getCategory(),
                 entity.getMinStock(),
@@ -16,7 +18,7 @@ public class FilterArgMapper {
         );
     }
 
-    public static void updateEntity(BaseFilterArgTable table, FilterArgDto filterArgDto) {
+    public void updateEntity(BaseFilterArgTable table, FilterArgDto filterArgDto) {
         table.setCategory(filterArgDto.getCategory());
         table.setMinStock(filterArgDto.getMinStock());
         table.setMaxStock(filterArgDto.getMaxStock());

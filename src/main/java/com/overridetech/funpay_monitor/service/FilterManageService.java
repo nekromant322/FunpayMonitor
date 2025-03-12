@@ -15,9 +15,10 @@ import java.util.List;
 public class FilterManageService {
 
     private final FilterArgRepository filterArgRepository;
+    private final FilterArgMapper filterArgMapper;
 
     public FilterArgDto getfilterArg(String category) {
-        return FilterArgMapper.mapEntityToDto(filterArgRepository.findByCategoty(category).orElseThrow());
+        return filterArgMapper.mapEntityToDto(filterArgRepository.findByCategory(category).orElseThrow());
 
 
     }
@@ -29,9 +30,9 @@ public class FilterManageService {
 
     @Transactional
     public FilterArgDto updateFilter(FilterArgDto filterArgDto, String category) {
-        BaseFilterArgTable table = filterArgRepository.findByCategoty(category).orElseThrow();
-        FilterArgMapper.updateEntity(table, filterArgDto);
+        BaseFilterArgTable table = filterArgRepository.findByCategory(category).orElseThrow();
+        filterArgMapper.updateEntity(table, filterArgDto);
         filterArgRepository.save(table);
-        return FilterArgMapper.mapEntityToDto(filterArgRepository.findByCategoty(category).orElseThrow());
+        return filterArgMapper.mapEntityToDto(filterArgRepository.findByCategory(category).orElseThrow());
     }
 }

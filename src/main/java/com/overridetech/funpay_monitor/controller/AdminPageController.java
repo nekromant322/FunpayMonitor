@@ -34,11 +34,6 @@ public class AdminPageController {
         return "admin-page";
     }
 
-    @GetMapping("/scrap")
-    public String  getCurrencyRateWithSelenium() {
-        funPayService.scrapDivineOffers();
-        return "";
-    }
 
     @PatchMapping("/apply-filters")
     public String updateFilter(@RequestParam("category") String category,
