@@ -1,7 +1,6 @@
 package com.overridetech.funpay_monitor.schedulers;
 
 
-import com.overridetech.funpay_monitor.entity.Category;
 import com.overridetech.funpay_monitor.service.FunPayService;
 import com.overridetech.funpay_monitor.service.GoogleSheetService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +21,8 @@ public class PoeSheduler {
 
     @Scheduled(fixedRateString = "${app.scrapRate}")
     public void scarpDivineOffers() {
-        funPayService.scrapOffers();
+
+        funPayService.scrapOffers("WOW retail", "WOW classic Пламегор Альянс");
     }
 
     //todo    получать список всех id из бд и рефрешить каждую

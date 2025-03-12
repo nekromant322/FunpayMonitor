@@ -31,7 +31,7 @@ public class Offer implements Exportable {
 
     private String ref;
 
-    private String league;
+    private String server;
 
     private Boolean online;
 
@@ -43,6 +43,6 @@ public class Offer implements Exportable {
 
     @Override
     public List<Object> prepareToExport() {
-        return List.of(uuid, price, stock, seller, ref, league, online, time, rating, experience);
+        return List.of(uuid, price, stock, seller, ref, server, online, time, rating, experience);
     }
 }

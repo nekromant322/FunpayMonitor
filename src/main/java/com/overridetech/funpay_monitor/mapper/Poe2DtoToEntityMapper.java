@@ -14,7 +14,7 @@ public class Poe2DtoToEntityMapper {
         entity.setSeller(dto.getSeller());
         entity.setTime(dto.getTime());
         entity.setExperience(dto.getExperience());
-        entity.setLeague(dto.getServer());
+        entity.setServer(dto.getServer());
 
         try {
             entity.setPrice(Double.parseDouble(dto.getPrice()));
@@ -34,7 +34,7 @@ public class Poe2DtoToEntityMapper {
         dto.setRef(entity.getRef());
         dto.setSeller(entity.getSeller());
         dto.setIsOnline(entity.getOnline());
-        dto.setServer(entity.getLeague());
+        dto.setServer(entity.getServer());
         dto.setRating(entity.getRating());
         dto.setExperience(entity.getExperience());
         dto.setTime(entity.getTime());

@@ -22,6 +22,12 @@ public class Category {
 
     private String urlForExport;
 
+    @Column(columnDefinition = "varchar default ''")
+    private String ServerKeyWord;
+
+    @Column(columnDefinition = "varchar default ''")
+    private String TcSideKeyWord;
+
     @JoinColumn(name = "filter_id", referencedColumnName = "id", unique = true)
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private BaseFilterArgTable filterArgTable;
