@@ -10,6 +10,7 @@ import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.SheetsScopes;
 import com.google.auth.http.HttpCredentialsAdapter;
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.overridetech.funpay_monitor.config.property.GoogleServiceProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,11 +18,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
-import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.security.GeneralSecurityException;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -68,9 +68,13 @@ public class GoogleApiConfig {
     @Bean
     @Profile("prod")
     public GoogleCredentials getProdGoogleCredentials() throws IOException {
-        InputStream credentialsInputStream = new ByteArrayInputStream(googleServiceProperties.getCredentialsJson().getBytes());
-        return GoogleCredentials.fromStream(credentialsInputStream);
 
+        return  ServiceAccountCredentials.fromPkcs8(
+                googleServiceProperties.getClientId(),
+                googleServiceProperties.getClientEmail(),
+                googleServiceProperties.getPrivateKey().replace("\\n", "\n"),
+                googleServiceProperties.getPrivateKeyId(),
+                Collections.emptyList());
     }
 
     @Bean

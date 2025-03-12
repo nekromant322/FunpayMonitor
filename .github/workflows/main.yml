@@ -3,7 +3,7 @@ name: Build image && run new version on server
 on:
   push:
     branches:
-      - feature/admin-page
+      - master
 
 
 jobs:
