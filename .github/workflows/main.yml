@@ -47,8 +47,8 @@ jobs:
         run: |
           echo "DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }}" >> $GITHUB_ENV
           echo "DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}" >> $GITHUB_ENV
-          echo "DATABASE_PASSWORD=${{ secrets.GOOGLE_PRIVATE_KEY_ID }}" >> $GITHUB_ENV
-          echo "DATABASE_PASSWORD=${{ secrets.GOOGLE_PRIVATE_ID }}" >> $GITHUB_ENV
+          echo "GOOGLE_PRIVATE_KEY_ID=${{ secrets.GOOGLE_PRIVATE_KEY_ID }}" >> $GITHUB_ENV
+          echo "GOOGLE_PRIVATE_ID=${{ secrets.GOOGLE_PRIVATE_ID }}" >> $GITHUB_ENV
 
       # 2. Генерируем docker-compose.yml из шаблона
       - name: Generate docker-compose from template

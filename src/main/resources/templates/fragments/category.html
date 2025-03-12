@@ -1,0 +1,19 @@
+<div th:fragment="category">
+    <button class="btn btn-outline-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#categoriesOffcanvas">
+        Категории
+    </button>
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="categoriesOffcanvas">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Категории</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <ul class="list-group">
+                <li class="list-group-item" th:each="category : ${categories}">
+                    <a th:href="@{/admin(category=${category})}" th:text="${category}" class="text-decoration-none"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>
