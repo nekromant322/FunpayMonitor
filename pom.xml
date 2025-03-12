@@ -93,6 +93,24 @@
 			<artifactId>selenium-java</artifactId>
 			<version>4.26.0</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.google.apis/google-api-services-sheets -->
+		<dependency>
+			<groupId>com.google.apis</groupId>
+			<artifactId>google-api-services-sheets</artifactId>
+			<version>v4-rev612-1.25.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.apis</groupId>
+			<artifactId>google-api-services-drive</artifactId>
+			<version>v3-rev197-1.25.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.google.auth/google-auth-library-oauth2-http -->
+		<dependency>
+			<groupId>com.google.auth</groupId>
+			<artifactId>google-auth-library-oauth2-http</artifactId>
+			<version>1.33.1</version>
+		</dependency>
+
 
 		<!-- PostgreSQL database -->
 		<dependency>
