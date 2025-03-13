@@ -5,8 +5,8 @@ import com.overridetech.funpay_monitor.dto.BaseOffer;
 import com.overridetech.funpay_monitor.entity.Offer;
 import com.overridetech.funpay_monitor.integration.googlesheet.Exportable;
 import com.overridetech.funpay_monitor.integration.googlesheet.GoogleSheetManipulation;
-import com.overridetech.funpay_monitor.mapper.Poe2DtoToEntityMapper;
-import com.overridetech.funpay_monitor.repository.Poe2DivineOfferRepository;
+import com.overridetech.funpay_monitor.mapper.OfferDtoToEntityMapper;
+import com.overridetech.funpay_monitor.repository.OfferRepository;
 import com.overridetech.funpay_monitor.util.filter.OutliersFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class GoogleSheetService {
 
     private final GoogleSheetManipulation googleSheet;
-    private final Poe2DivineOfferRepository poe2DivineOfferRepository;
+    private final OfferRepository poe2DivineOfferRepository;
     private final OutliersFilter<BaseOffer> filter;
 
     //todo  добавить в таблицу спаршенных данных, колонку категория,
@@ -42,7 +42,7 @@ public class GoogleSheetService {
 
     private Double getAvgPrice(List<Offer> offers) {
         List<BaseOffer> dtos = offers.stream()
-                .map(Poe2DtoToEntityMapper::mapEntityToDto)
+                .map(OfferDtoToEntityMapper::mapEntityToDto)
                 .toList();
         dtos = filter.trimDataSet(dtos, 0.1, 0.5, 20d);
         return dtos.

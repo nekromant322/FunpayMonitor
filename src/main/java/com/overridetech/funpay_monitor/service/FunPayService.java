@@ -3,10 +3,10 @@ package com.overridetech.funpay_monitor.service;
 import com.overridetech.funpay_monitor.client.FunPayClient;
 import com.overridetech.funpay_monitor.dto.BaseOffer;
 import com.overridetech.funpay_monitor.entity.Category;
-import com.overridetech.funpay_monitor.mapper.Poe2DtoToEntityMapper;
-import com.overridetech.funpay_monitor.parser.FunPayPoe2Parser;
+import com.overridetech.funpay_monitor.mapper.OfferDtoToEntityMapper;
+import com.overridetech.funpay_monitor.parser.Parser;
 import com.overridetech.funpay_monitor.repository.CategoryRepository;
-import com.overridetech.funpay_monitor.repository.Poe2DivineOfferRepository;
+import com.overridetech.funpay_monitor.repository.OfferRepository;
 import com.overridetech.funpay_monitor.util.filter.OutliersFilter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,10 +23,10 @@ import java.util.Objects;
 public class FunPayService {
 
     private final FunPayClient client;
-    private final Poe2DivineOfferRepository offerRepository;
+    private final OfferRepository offerRepository;
     private final CategoryRepository categoryRepository;
     private final OutliersFilter<BaseOffer> outliersFilter;
-    private final FunPayPoe2Parser funPayPoe2Parser;
+    private final Parser funPayPoe2Parser;
 
 
     /** Парсит данные с фанпея и заносит их в бд, отсекая анномальные значения
@@ -44,7 +44,7 @@ public class FunPayService {
 
         var offers = dtos.stream()
                 .filter(Objects::nonNull)
-                .map(Poe2DtoToEntityMapper::mapDtoToEntity)
+                .map(OfferDtoToEntityMapper::mapDtoToEntity)
                 .toList();
 
         offerRepository.saveAll(offers);

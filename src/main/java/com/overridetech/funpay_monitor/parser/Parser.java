@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 @Slf4j
 @Component
-public class FunPayPoe2Parser extends  AbstractParser {
+public class Parser {
 
     public static final String TAG_ITEM = "div.tc-side";
     public static final String TAG_UNIT = "div.tc-price > div > span.unit";

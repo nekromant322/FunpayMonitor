@@ -3,7 +3,7 @@ package com.overridetech.funpay_monitor.mapper;
 import com.overridetech.funpay_monitor.dto.BaseOffer;
 import com.overridetech.funpay_monitor.entity.Offer;
 
-public class Poe2DtoToEntityMapper {
+public class OfferDtoToEntityMapper {
     public static Offer mapDtoToEntity(BaseOffer dto) {
         Offer entity = new Offer();
 
