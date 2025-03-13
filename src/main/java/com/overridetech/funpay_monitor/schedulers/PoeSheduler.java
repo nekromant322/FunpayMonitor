@@ -21,7 +21,8 @@ public class PoeSheduler {
 
     @Scheduled(fixedRateString = "${app.scrapRate}")
     public void scarpDivineOffers() {
-        funPayService.scrapDivineOffers();
+
+        funPayService.scrapOffers("WOW retail", "WOW classic Пламегор Альянс");
     }
 
     //todo    получать список всех id из бд и рефрешить каждую

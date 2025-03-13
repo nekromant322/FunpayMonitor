@@ -1,10 +1,13 @@
 package com.overridetech.funpay_monitor.controller;
 
 
+import com.overridetech.funpay_monitor.dto.CategoryDto;
 import com.overridetech.funpay_monitor.dto.FilterArgDto;
 import com.overridetech.funpay_monitor.service.FilterManageService;
 import com.overridetech.funpay_monitor.service.FunPayService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -37,10 +40,16 @@ public class AdminPageController {
 
     @PatchMapping("/apply-filters")
     public String updateFilter(@RequestParam("category") String category,
-                               @ModelAttribute FilterArgDto  filterArgs,
+                               @ModelAttribute FilterArgDto filterArgs,
                                Model model) {
         FilterArgDto filterArgDto = filterManageService.updateFilter(filterArgs, category);
         model.addAttribute(filterArgDto);
         return "admin-page";
+    }
+
+
+    @PostMapping("/category")
+    public ResponseEntity<String> addCategory(@RequestBody CategoryDto category) {
+        return new ResponseEntity<>(funPayService.addCategory(category), HttpStatus.CREATED);
     }
 }

@@ -1,21 +1,20 @@
 package com.overridetech.funpay_monitor.mapper;
 
-import com.overridetech.funpay_monitor.dto.FunPayPoe2Offer;
-import com.overridetech.funpay_monitor.entity.Poe2DivineOffer;
+import com.overridetech.funpay_monitor.dto.BaseOfferDto;
+import com.overridetech.funpay_monitor.entity.Offer;
 
-import java.math.BigDecimal;
+public class OfferDtoToEntityMapper {
+    public static Offer mapDtoToEntity(BaseOfferDto dto) {
+        Offer entity = new Offer();
 
-public class Poe2DtoToEntityMapper {
-    public static Poe2DivineOffer mapDtoToEntity(FunPayPoe2Offer dto) {
-        Poe2DivineOffer entity = new Poe2DivineOffer();
-
+        entity.setCategory(dto.getCategory());
         entity.setRating(dto.getRating());
         entity.setOnline(dto.getIsOnline());
         entity.setRef(dto.getRef());
         entity.setSeller(dto.getSeller());
         entity.setTime(dto.getTime());
         entity.setExperience(dto.getExperience());
-        entity.setLeague(dto.getServer());
+        entity.setServer(dto.getServer());
 
         try {
             entity.setPrice(Double.parseDouble(dto.getPrice()));
@@ -28,13 +27,14 @@ public class Poe2DtoToEntityMapper {
         return entity;
     }
 
-    public static FunPayPoe2Offer mapEntityToDto(Poe2DivineOffer entity) {
-        FunPayPoe2Offer dto = new FunPayPoe2Offer();
+    public static BaseOfferDto mapEntityToDto(Offer entity) {
+        BaseOfferDto dto = new BaseOfferDto();
 
+        dto.setCategory(entity.getCategory());
         dto.setRef(entity.getRef());
         dto.setSeller(entity.getSeller());
         dto.setIsOnline(entity.getOnline());
-        dto.setServer(entity.getLeague());
+        dto.setServer(entity.getServer());
         dto.setRating(entity.getRating());
         dto.setExperience(entity.getExperience());
         dto.setTime(entity.getTime());
