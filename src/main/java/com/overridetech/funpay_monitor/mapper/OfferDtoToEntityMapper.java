@@ -1,10 +1,10 @@
 package com.overridetech.funpay_monitor.mapper;
 
-import com.overridetech.funpay_monitor.dto.BaseOffer;
+import com.overridetech.funpay_monitor.dto.BaseOfferDto;
 import com.overridetech.funpay_monitor.entity.Offer;
 
 public class OfferDtoToEntityMapper {
-    public static Offer mapDtoToEntity(BaseOffer dto) {
+    public static Offer mapDtoToEntity(BaseOfferDto dto) {
         Offer entity = new Offer();
 
         entity.setCategory(dto.getCategory());
@@ -27,8 +27,8 @@ public class OfferDtoToEntityMapper {
         return entity;
     }
 
-    public static BaseOffer mapEntityToDto(Offer entity) {
-        BaseOffer dto = new BaseOffer();
+    public static BaseOfferDto mapEntityToDto(Offer entity) {
+        BaseOfferDto dto = new BaseOfferDto();
 
         dto.setCategory(entity.getCategory());
         dto.setRef(entity.getRef());

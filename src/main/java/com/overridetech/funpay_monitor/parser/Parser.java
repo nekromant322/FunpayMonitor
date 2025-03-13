@@ -1,6 +1,6 @@
 package com.overridetech.funpay_monitor.parser;
 
-import com.overridetech.funpay_monitor.dto.BaseOffer;
+import com.overridetech.funpay_monitor.dto.BaseOfferDto;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
 import org.jsoup.Jsoup;
@@ -31,7 +31,7 @@ public class Parser {
 
 
 
-    public BaseOffer parseHtmlToFunPayPoe2Offer(String html, String category) {
+    public BaseOfferDto parseHtmlToFunPayPoe2Offer(String html, String category) {
 
         try {
             Document doc = Jsoup.parse(html);
@@ -51,7 +51,7 @@ public class Parser {
             String reviews = parseElement(doc, TAG_REVIEWS).replace(" ", "").trim();
             String experience = parseElement(doc, TAG_EXPERIENCE);
 
-            return BaseOffer.builder()
+            return BaseOfferDto.builder()
                     .ref(ref)
                     .category(category)
                     .item(item)

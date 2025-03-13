@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class BaseOffer implements Offer {
+public class BaseOfferDto implements Offer {
     private String ref;
     private String category;
     private String item;

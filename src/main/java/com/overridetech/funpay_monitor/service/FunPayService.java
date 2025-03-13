@@ -1,8 +1,10 @@
 package com.overridetech.funpay_monitor.service;
 
 import com.overridetech.funpay_monitor.client.FunPayClient;
-import com.overridetech.funpay_monitor.dto.BaseOffer;
+import com.overridetech.funpay_monitor.dto.BaseOfferDto;
+import com.overridetech.funpay_monitor.dto.CategoryDto;
 import com.overridetech.funpay_monitor.entity.Category;
+import com.overridetech.funpay_monitor.mapper.CategoryMapper;
 import com.overridetech.funpay_monitor.mapper.OfferDtoToEntityMapper;
 import com.overridetech.funpay_monitor.parser.Parser;
 import com.overridetech.funpay_monitor.repository.CategoryRepository;
@@ -25,8 +27,9 @@ public class FunPayService {
     private final FunPayClient client;
     private final OfferRepository offerRepository;
     private final CategoryRepository categoryRepository;
-    private final OutliersFilter<BaseOffer> outliersFilter;
+    private final OutliersFilter<BaseOfferDto> outliersFilter;
     private final Parser funPayPoe2Parser;
+    private final CategoryMapper categoryMapper;
 
 
     /** Парсит данные с фанпея и заносит их в бд, отсекая анномальные значения
@@ -39,7 +42,7 @@ public class FunPayService {
         if (categories.isEmpty()) {
             categories = categoryRepository.findAll();
         }
-        List<BaseOffer> dtos = parseDto(categories);
+        List<BaseOfferDto> dtos = parseDto(categories);
         dtos = outliersFilter.trimDataSet(dtos, 0.1, 0.5, 20d);
 
         var offers = dtos.stream()
@@ -50,9 +53,14 @@ public class FunPayService {
         offerRepository.saveAll(offers);
     }
 
+    public String addCategory(CategoryDto category) {
+        categoryRepository.save(categoryMapper.mapDtoToEntity(category));
+        return category.getName();
+    }
 
-    private List<BaseOffer> parseDto(List<Category> categories) {
-        List<BaseOffer> dtos = new ArrayList<>();
+
+    private List<BaseOfferDto> parseDto(List<Category> categories) {
+        List<BaseOfferDto> dtos = new ArrayList<>();
         for (Category category : categories) {
             try {
                 LocalDateTime time = LocalDateTime.now();
